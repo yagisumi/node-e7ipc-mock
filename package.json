@@ -1,0 +1,52 @@
+{
+  "name": "@yagisumi/e7ipc-mock",
+  "version": "0.1.0",
+  "description": "",
+  "keywords": [],
+  "engines": {
+    "node": ">= 6.0.0"
+  },
+  "private": true,
+  "main": "lib/e7ipc-mock",
+  "module": "lib/e7ipc-mock.mjs",
+  "types": "lib/e7ipc-mock.d.ts",
+  "unpkg": "umd/e7ipc-mock.js",
+  "scripts": {
+    "test": "run-s prettier:fix eslint jest",
+    "jest": "jest",
+    "doc": "typedoc --json ./docs/typedoc.json --tsconfig ./tsconfig.json ./src",
+    "build": "run-s clean build:*",
+    "clean": "rimraf lib coverage umd *.tgz .rpt2_cache",
+    "build:cjs": "rollup -c -f cjs -o ./lib/e7ipc-mock.js",
+    "build:mjs": "rollup -c -f es -o ./lib/e7ipc-mock.mjs",
+    "build:umd": "rollup -c rollup.config.umd.js",
+    "build:d_ts": "tsc -p src -d --emitDeclarationOnly --outDir ./lib",
+    "prettier:fix": "prettier --write **/*.{ts,js,json}",
+    "eslint": "eslint **/*.{js,ts}",
+    "prepack": "run-s build test"
+  },
+  "author": "yagisumi",
+  "repository": "github:yagisumi/node-e7ipc-mock",
+  "homepage": "http://github.com/yagisumi/node-e7ipc-mock#readme",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jest": "^24.0.25",
+    "@types/node": "^13.1.1",
+    "@typescript-eslint/eslint-plugin": "^2.13.0",
+    "@typescript-eslint/parser": "^2.13.0",
+    "coveralls": "^3.0.9",
+    "eslint": "^6.8.0",
+    "jest": "^24.9.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^1.19.1",
+    "rimraf": "^3.0.0",
+    "rollup": "^1.27.14",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-terser": "^5.1.3",
+    "rollup-plugin-typescript2": "^0.25.3",
+    "ts-jest": "^24.2.0",
+    "typedoc": "^0.15.6",
+    "typescript": "^3.7.4"
+  }
+}
