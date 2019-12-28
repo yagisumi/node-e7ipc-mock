@@ -6,7 +6,7 @@ export class Mock<Req, Res> implements Server<Req, Res>, Client<Req, Res> {
 
   invoke(request: Req): Promise<Res> {
     if (this.handler === undefined) {
-      return Promise.reject(new Error('No handler'))
+      return Promise.reject(new Error('No handler registered'))
     } else {
       return this.handler({}, request)
     }
@@ -14,7 +14,7 @@ export class Mock<Req, Res> implements Server<Req, Res>, Client<Req, Res> {
 
   handle(listener: Handler<Req, Res>) {
     if (this.handler !== undefined) {
-      throw new Error('already exist handler')
+      throw new Error('Attempted to register a second handler')
     }
     this.handler = listener
   }
