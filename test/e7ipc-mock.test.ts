@@ -17,9 +17,6 @@ interface Responses {
   ok: {
     type: 'ok'
   }
-  error: {
-    type: 'error'
-  }
 }
 
 type Response = MapType<Responses>
@@ -28,7 +25,7 @@ const handler: Handler<Request, Response> = async (_, req) => {
   if (req.type === 'hello') {
     return { type: 'ok' }
   } else if (req.type === 'bye') {
-    throw new Error(`don't say goodbye`)
+    throw new Error(`Don't say good bye`)
   } else {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const unreachable: never = req
@@ -51,15 +48,7 @@ describe('Mock', () => {
     expect(r2).toBeNull()
   })
 
-  test('register handler twice', () => {
-    const mock = new Mock<Request, Response>()
-    mock.handle(handler)
-    expect(() => {
-      mock.handle(handler)
-    }).toThrowError()
-  })
-
-  test('removeHandler, handleOnce, NoHandler', async () => {
+  test('handle, removeHandler, handleOnce', async () => {
     const mock = new Mock<Request, Response>()
     mock.handle(handler)
     mock.removeHandler()
@@ -71,6 +60,10 @@ describe('Mock', () => {
     expect(r1).toBeNull()
 
     mock.handleOnce(handler)
+    expect(() => {
+      mock.handle(handler)
+    }).toThrowError()
+
     const r2 = await mock.invoke({ type: 'hello' })
     expect(r2).toEqual({ type: 'ok' })
 
