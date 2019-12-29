@@ -3,7 +3,7 @@
 Welcome
 
 [![NPM version][npm-image]][npm-url] [![install size][packagephobia-image]][packagephobia-url] [![DefinitelyTyped][dts-image]][dts-url]  
-[![Build Status][travis-image]][travis-url] [![Build Status][appveyor-image]][appveyor-url] [![Coverage percentage][coveralls-image]][coveralls-url]
+[![Coverage percentage][coveralls-image]][coveralls-url]
 
 ## Installation
 
@@ -16,22 +16,53 @@ $ npm i @yagisumi/e7ipc-mock
 - javascript
 
 ```js
-const XXXXXXXXX = require('@yagisumi/e7ipc-mock').e7ipc-mock;
+const Mock = require('@yagisumi/e7ipc-mock').Mock;
 
-XXXXXXXXX();
+new Mock();
 ```
 
 - typescript
 
 ```ts
-import { @yagisumi/e7ipc-mock } from '@yagisumi/e7ipc-mock';
+import { Mock } from '@yagisumi/e7ipc-mock'
 
-XXXXXXXXX();
+type MapType<T, U = keyof T> = U extends keyof T ? T[U] : never
+
+interface Requests {
+  hello: {
+    type: 'hello'
+  }
+  bye: {
+    type: 'bye'
+  }
+}
+
+type Request = MapType<Requests>
+
+interface Responses {
+  ok: {
+    type: 'ok'
+  }
+}
+
+type Response = MapType<Responses>
+
+const mock = new Mock<Request, Response>()
+
+mock.handle(async (_, req) => {
+  if (req.type === 'hello') {
+    return { type: 'ok' }
+  } else if (req.type === 'bye') {
+    throw new Error(`Don't say good bye`)
+  } else {
+    const unreachable: never = req
+    throw new Error('unreachable')
+  }
+})
+
+const res = await mock.invoke({ type: 'hello' }).catch(() => undefined)
+
 ```
-
-## Documentation
-
-https://yagisumi.github.io/node-e7ipc-mock/
 
 ## License
 
@@ -41,10 +72,6 @@ https://yagisumi.github.io/node-e7ipc-mock/
 [npm-url]: https://npmjs.org/package/@yagisumi/e7ipc-mock
 [packagephobia-image]: https://flat.badgen.net/packagephobia/install/@yagisumi/e7ipc-mock
 [packagephobia-url]: https://packagephobia.now.sh/result?p=@yagisumi/e7ipc-mock
-[travis-image]: https://img.shields.io/travis/yagisumi/node-e7ipc-mock.svg?style=flat-square
-[travis-url]: https://travis-ci.org/yagisumi/node-e7ipc-mock
-[appveyor-image]: https://img.shields.io/appveyor/ci/yagisumi/node-e7ipc-mock.svg?logo=appveyor&style=flat-square
-[appveyor-url]: https://ci.appveyor.com/project/yagisumi/node-e7ipc-mock
 [coveralls-image]: https://img.shields.io/coveralls/yagisumi/node-e7ipc-mock.svg?style=flat-square
 [coveralls-url]: https://coveralls.io/github/yagisumi/node-e7ipc-mock?branch=master
 [dts-image]: https://img.shields.io/badge/DefinitelyTyped-.d.ts-blue.svg?style=flat-square
