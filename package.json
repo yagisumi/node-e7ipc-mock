@@ -4,7 +4,7 @@
   "description": "",
   "keywords": [],
   "engines": {
-    "node": ">= 6.0.0"
+    "node": ">= 8.0.0"
   },
   "private": true,
   "main": "lib/e7ipc-mock",
@@ -46,6 +46,6 @@
     "typescript": "^3.7.4"
   },
   "dependencies": {
-    "@yagisumi/e7ipc-types": "file:yagisumi-e7ipc-types-0.1.0.tgz"
+    "@yagisumi/e7ipc-types": "^0.1.0"
   }
 }
