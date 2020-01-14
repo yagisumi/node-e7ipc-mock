@@ -1,12 +1,11 @@
 {
   "name": "@yagisumi/e7ipc-mock",
   "version": "0.1.0",
-  "description": "",
+  "description": "Mock for handler test.",
   "keywords": [],
   "engines": {
     "node": ">= 8.0.0"
   },
-  "private": true,
   "main": "lib/e7ipc-mock",
   "module": "lib/e7ipc-mock.mjs",
   "types": "lib/e7ipc-mock.d.ts",
