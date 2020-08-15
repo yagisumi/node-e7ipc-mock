@@ -8,8 +8,9 @@ jobs:
     name: Node.js ${{ matrix.node }}
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        node: [8, 10, 12, 13]
+        node: [10, 12, 14]
     steps:
       - uses: actions/checkout@v2
       - name: Set Node.js
@@ -23,7 +24,7 @@ jobs:
       - run: npm install
       - run: npm test
       - name: Coveralls
-        if: matrix.node == 12
+        if: matrix.node == 14
         uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.github_token }}
